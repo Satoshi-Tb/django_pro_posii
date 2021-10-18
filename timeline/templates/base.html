@@ -1,4 +1,5 @@
 {% load static %}
+{% load bootstrap4 %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -15,15 +16,24 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">タイムライン</a>
+                    <a class="nav-link" href="{% url 'timeline:index' %}">タイムライン</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">プロフィール</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">ログアウト</a>
+                    <a class="nav-link" href="{% url 'account_logout' %}">ログアウト</a>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_login' %}">ログイン</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_signup' %}">ユーザー登録</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>

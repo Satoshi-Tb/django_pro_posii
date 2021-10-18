@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'timeline.apps.TimelineConfig',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    #'allauth.socialaccount',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +137,19 @@ MESSAGE_TAGS = {
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
+SITE_ID = 1
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = True
+LOGIN_REDIRECT_URL = 'timeline:index'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+DEFAULT_FROM_EMAIL = 'admin@example.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
