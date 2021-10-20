@@ -35,3 +35,16 @@ class CreateView(LoginRequiredMixin, generic.CreateView):
 
 create = CreateView.as_view()
 
+
+class DeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Post
+    success_url = reverse_lazy('timeline:index')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.author == request.user:
+            messages.success(self.request, '削除しました。')
+            return super().delete(request, *args, **kwargs)
+
+
+delete = DeleteView.as_view()

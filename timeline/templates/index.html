@@ -45,6 +45,14 @@
             </div>
         </div>
         <p class="card-text mt-2">{{ post.text | linebreaks }}</p>
+        {% if post.author.id == user.id %}
+        <form method="post" action="{% url 'timeline:delete' post.id %}" class="d-inline">
+            {% csrf_token %}
+            <button class="btn btn-link text-info p-0 ml-3" type="submit" onclick='return confirm("削除してよろしいですか？");'>
+                削除
+            </button>
+        </form>
+        {% endif %}
     </div>
     {% if post.post_photo %}
     <img class="card-img-bottom" src="{{ post.post_photo.url }}" alt="Card image cap">
