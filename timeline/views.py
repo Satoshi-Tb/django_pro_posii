@@ -1,10 +1,11 @@
 from django.views import generic
-from .models import Post
+from .models import Post, Like
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import PostForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.http.response import JsonResponse
 
 
 class IndexView(LoginRequiredMixin, generic.ListView):
@@ -48,3 +49,19 @@ class DeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 delete = DeleteView.as_view()
+
+
+class LikeView(LoginRequiredMixin, generic.View):
+    model = Like
+
+    def post(self, request):
+        post_id = request.POST.get('id')
+        post = Post.objects.get(id=post_id)
+        like_item = Like(user=self.request.user, post=post)
+        like_item.save()
+        like_count = Like.objects.filter(post=post).count()
+        data = {'message': 'ほめました', 'like_count': like_count}
+        return JsonResponse(data)
+
+
+like = LikeView.as_view()
