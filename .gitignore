@@ -142,3 +142,4 @@ cython_debug/
 /media/CACHE/
 /media/images/*.*
 !.gitkeep
+/staticfiles
